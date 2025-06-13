@@ -19,7 +19,10 @@ RUN sed -i 's@lirou.fun@lirou.fun@g' /root/openpilot/openpilot-server/config.txt
 
 RUN sed -i 's@/usr/bin/ffmpeg@/usr/bin/ffmpeg@g' /root/openpilot/openpilot-server/config.txt
 
-#COPY op ./op
+# 复制可执行文件
+COPY opserver_linux_amd64 /root/openpilot/openpilot-server/
+RUN chmod +x /root/openpilot/openpilot-server/opserver_linux_amd64
+
 RUN mkdir op
 
 ENTRYPOINT ["/root/openpilot/openpilot-server/opserver_linux_amd64"]
