@@ -23,6 +23,12 @@ RUN sed -i 's@/usr/bin/ffmpeg@/usr/bin/ffmpeg@g' /root/openpilot/openpilot-serve
 COPY opserver_linux_amd64 /root/openpilot/openpilot-server/
 RUN chmod +x /root/openpilot/openpilot-server/opserver_linux_amd64
 
-RUN mkdir op
+# 创建所有必要的数据目录并设置权限
+RUN mkdir -p /root/openpilot/openpilot-server/op && \
+    chmod 777 /root/openpilot/openpilot-server/op && \
+    touch /root/openpilot/openpilot-server/op/main.UserInfodata.gob && \
+    touch /root/openpilot/openpilot-server/op/main.AuthResultdata.gob && \
+    chmod 666 /root/openpilot/openpilot-server/op/main.UserInfodata.gob && \
+    chmod 666 /root/openpilot/openpilot-server/op/main.AuthResultdata.gob
 
 ENTRYPOINT ["/root/openpilot/openpilot-server/opserver_linux_amd64"]
