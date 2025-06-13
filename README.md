@@ -49,7 +49,25 @@ exec ./launch_openpilot.sh
 (4) 重启 C3。 putty 设置参考putty1.png putty2.png  
 
 #### 5. 暴露端口和运行docker  
-sudo docker run -p 7899:7899 -p 7898:7898 -p 7888:7888 -p 1201:1201 -p 5888:5888 opsvr:v1
+sudo docker run -p 7899:7899 -p 7898:7898 -p 7888:7888 -p 1201:1201 -p 5888:5888 openpilot-server:0.1
+
+#### docker compose 样例
+
+version: '3.3'
+services:
+  opserver:
+    # 镜像  #  ↓↓↓↓↓ ---  修改镜像版本号
+    image: guohuageng/openpilot-server:0.1
+    container_name: opserver # 容器名
+    restart: unless-stopped # 重启
+    ports: # 端口映射
+      - "7899:7899"  # 映射主机的 7899 端口到容器的 7899 端口
+      - "7898:7898"  # 映射主机的 7898 端口到容器的 7898 端口
+      - "7888:7888"  # 映射主机的 7888 端口到容器的 7888 端口
+      - "1201:1201"  # 映射主机的 1201 端口到容器的 1201 端口
+      - "5888:5888"  # 映射主机的 5888 端口到容器的 5888 端口
+    environment: # 环境变量
+      - TZ=Asia/Shanghai
 
 #### 6.Star me. Thank you.如果觉得很复杂，可以直接看第二步，使用我的服务器。
 
